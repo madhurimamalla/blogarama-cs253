@@ -64,12 +64,18 @@ class NewPostPage(Handler):
 
         if subject and content:
             a = Post(subject = subject, content = content)
-            a.put()
+            a_key = a.put() #Key('Post',id)
             
-            self.redirect("/blog")
+            
+            self.redirect("/blog/%d" %a_key.id())
         else:
             error = "We need both a Subject and come Content!"
             self.render_front(subject, content, error = error)
 
-app = webapp2.WSGIApplication([('/blog', FrontPage),('/blog/newpost', NewPostPage)],
+class Permalink(FrontPage):
+    def get(self, post_id):
+        s = Post.get_by_id(int(post_id))
+        self.render("FrontPage.html",posts=[s])
+
+app = webapp2.WSGIApplication([('/blog', FrontPage),('/blog/newpost', NewPostPage),('/blog/(\d+)',Permalink)],
                               debug=True)
