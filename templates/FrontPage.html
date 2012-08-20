@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+ <head>
+  <title>Blogarama!</title>
+ </head>
+ <style type="text/css">
+
+hr{
+margin: 20px auto;
+}
+
+.post + .post {
+margin-top: 20px;
+}
+
+.post-subject {
+font-weight: bold;
+font-size: 20px;
+}
+
+.post-content {
+margin: 0;
+font-size: 17px;
+}
+ </style>
+ <body>
+  <h1>Blogarama</h1>
+    <hr>
+  {% for post in posts %}
+    <div class="post">
+     <div class="post-subject">{{post.subject}}</div>
+     <pre class="post-content">{{post.content}}</pre>
+    </div>
+  {% endfor %}
+ </body>
+</html>
